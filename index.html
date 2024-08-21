@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batalha de Pokémon</title>
+    <title>Batalha de Pokémon - Aprimorado</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,6 +14,9 @@
             <img src="player.png" alt="Player" class="player-image">
             <div class="stats">
                 <p>Vida: <span id="player-health">100</span></p>
+                <div class="health-bar">
+                    <div id="player-health-bar" class="health-fill"></div>
+                </div>
             </div>
         </div>
 
@@ -22,12 +25,16 @@
             <img src="enemy.png" alt="Enemy" class="enemy-image">
             <div class="stats">
                 <p>Vida: <span id="enemy-health">100</span></p>
+                <div class="health-bar">
+                    <div id="enemy-health-bar" class="health-fill"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="actions">
         <button id="attack-btn">Atacar</button>
+        <button id="special-btn">Habilidade Especial</button>
         <button id="defend-btn">Defender</button>
     </div>
 

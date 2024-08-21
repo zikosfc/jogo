@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batalha Pokémon Aprimorada</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="battle-screen">
+        <div class="player">
+            <h2>Deus</h2>
+            <img src="jesus.jpeg" alt="Player" class="jesus-image">
+            <div class="stats">
+                <p>Vida: <span id="player-health">100</span></p>
+                <div class="health-bar">
+                    <div id="player-health-bar" class="health-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="enemy">
+            <h2>Diabo</h2>
+            <img src="inimigo.jpeg" alt="Enemy" class="inimigo-image">
+            <div class="stats">
+                <p>Vida: <span id="enemy-health">100</span></p>
+                <div class="health-bar">
+                    <div id="enemy-health-bar" class="health-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button id="attack-btn">Atacar</button>
+        <button id="special-btn" disabled>Habilidade Especial (Recarga)</button>
+        <button id="defend-btn">Defender</button>
+    </div>
+
+    <div id="message-box"></div>
+
+    <script src="game.js"></script>
+</body>
+</html>

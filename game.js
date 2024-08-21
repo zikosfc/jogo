@@ -6,17 +6,15 @@ const playerHealthBar = document.getElementById("player-health-bar");
 const enemyHealthBar = document.getElementById("enemy-health-bar");
 const messageBox = document.getElementById("message-box");
 
-document.getElementById("attack-btn").addEventListener("click", function() {
-    playerAttack();
-});
+const attackBtn = document.getElementById("attack-btn");
+const specialBtn = document.getElementById("special-btn");
+const defendBtn = document.getElementById("defend-btn");
 
-document.getElementById("special-btn").addEventListener("click", function() {
-    specialAbility();
-});
+let specialCooldown = false;
 
-document.getElementById("defend-btn").addEventListener("click", function() {
-    playerDefend();
-});
+attackBtn.addEventListener("click", playerAttack);
+specialBtn.addEventListener("click", specialAbility);
+defendBtn.addEventListener("click", playerDefend);
 
 function updateHealthBars() {
     playerHealthBar.style.width = playerHealth + "%";
@@ -49,28 +47,23 @@ function playerAttack() {
 }
 
 function specialAbility() {
-    const playerDamage = Math.floor(Math.random() * 40) + 20;
-    const enemyDamage = Math.floor(Math.random() * 15) + 5;
+    if (!specialCooldown) {
+        const playerDamage = Math.floor(Math.random() * 40) + 20;
+        enemyHealth -= playerDamage;
+        if (enemyHealth < 0) enemyHealth = 0;
+        updateHealthBars();
 
-    enemyHealth -= playerDamage;
-    if (enemyHealth < 0) enemyHealth = 0;
-    updateHealthBars();
+        messageBox.textContent = `Você usou uma Habilidade Especial e causou ${playerDamage} de dano ao inimigo!`;
 
-    messageBox.textContent = `Você usou uma Habilidade Especial e causou ${playerDamage} de dano ao inimigo!`;
+        specialCooldown = true;
+        specialBtn.disabled = true;
 
-    setTimeout(() => {
-        if (enemyHealth > 0) {
-            playerHealth -= enemyDamage;
-            if (playerHealth < 0) playerHealth = 0;
-            updateHealthBars();
-
-            messageBox.textContent += ` O inimigo contra-atacou e causou ${enemyDamage} de dano!`;
-
-            checkGameOver();
-        } else {
-            messageBox.textContent = `Você venceu a batalha!`;
-        }
-    }, 1000);
+        setTimeout(() => {
+            specialCooldown = false;
+            specialBtn.disabled = false;
+            specialBtn.textContent = "Habilidade Especial";
+        }, 5000);  // Cooldown de 5 segundos
+    }
 }
 
 function playerDefend() {
@@ -96,7 +89,7 @@ function checkGameOver() {
 }
 
 function disableButtons() {
-    document.getElementById("attack-btn").disabled = true;
-    document.getElementById("special-btn").disabled = true;
-    document.getElementById("defend-btn").disabled = true;
+    attackBtn.disabled = true;
+    specialBtn.disabled = true;
+    defendBtn.disabled = true;
 }

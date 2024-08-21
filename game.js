@@ -24,7 +24,7 @@ function updateHealthBars() {
 function playerAttack() {
     if (enemyHealth > 0 && playerHealth > 0) {
         const playerDamage = Math.floor(Math.random() * 20) + 10;
-        const enemyDamage = Math.floor(Math.random() * 15) + 5;
+        const enemyDamage = Math.floor(Math.random() * 20) + 10;
 
         enemyHealth -= playerDamage;
         if (enemyHealth < 0) enemyHealth = 0;

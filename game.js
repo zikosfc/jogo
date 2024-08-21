@@ -106,10 +106,10 @@ function playerDefend() {
 
 function checkGameOver() {
     if (playerHealth <= 0) {
-        messageBox.textContent = "Atualiza a pagina até o glorioso ganhar!";
+        messageBox.textContent = "Você perdeu a batalha!";
         disableButtons();
     } else if (enemyHealth <= 0) {
-        messageBox.textContent = "O sangue de Jesus tem poder! Deus humilhou o inimigo;
+        messageBox.textContent = "Você venceu a batalha!";
         disableButtons();
     }
 }

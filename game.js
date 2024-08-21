@@ -17,31 +17,35 @@ specialBtn.addEventListener("click", specialAbility);
 defendBtn.addEventListener("click", playerDefend);
 
 function updateHealthBars() {
-    playerHealthBar.style.width = playerHealth + "%";
-    enemyHealthBar.style.width = enemyHealth + "%";
+    const playerHealthPercent = (playerHealth / 100) * 100;
+    const enemyHealthPercent = (enemyHealth / 100) * 100;
+
+    playerHealthBar.style.width = playerHealthPercent + "%";
+    enemyHealthBar.style.width = enemyHealthPercent + "%";
 }
 
 function playerAttack() {
     if (enemyHealth > 0 && playerHealth > 0) {
-        const playerDamage = Math.floor(Math.random() * 20) + 10;
-        const enemyDamage = Math.floor(Math.random() * 20) + 10;
+        const playerDamage = Math.floor(Math.random() * 15) + 10;
 
+        // Aplica o dano ao inimigo
         enemyHealth -= playerDamage;
         if (enemyHealth < 0) enemyHealth = 0;
         updateHealthBars();
+        messageBox.textContent = `Você usou "Ataque Rápido" e causou ${playerDamage} de dano ao inimigo!`;
 
-        messageBox.textContent = `Você atacou o inimigo e causou ${playerDamage} de dano!`;
-
+        // Inimigo ataca após um breve atraso
         setTimeout(() => {
             if (enemyHealth > 0) {
-                playerHealth -= enemyDamage;
+                // O inimigo causa o mesmo dano que o jogador
+                playerHealth -= playerDamage;
                 if (playerHealth < 0) playerHealth = 0;
                 updateHealthBars();
 
-                messageBox.textContent += ` O inimigo contra-atacou e causou ${enemyDamage} de dano em você!`;
+                messageBox.textContent += ` O inimigo usou "Ataque Rápido" e causou ${playerDamage} de dano em você!`;
                 checkGameOver();
             } else {
-                messageBox.textContent = `Você derrotou o inimigo!`;
+                messageBox.textContent = `Você derrotou o inimigo com "Ataque Rápido"!`;
                 disableButtons();
             }
         }, 1000);
@@ -50,12 +54,29 @@ function playerAttack() {
 
 function specialAbility() {
     if (!specialCooldown && enemyHealth > 0) {
-        const playerDamage = Math.floor(Math.random() * 40) + 20;
+        const playerDamage = Math.floor(Math.random() * 30) + 20;
+
+        // Aplica o dano ao inimigo
         enemyHealth -= playerDamage;
         if (enemyHealth < 0) enemyHealth = 0;
         updateHealthBars();
+        messageBox.textContent = `Você usou "Explosão de Energia" e causou ${playerDamage} de dano ao inimigo!`;
 
-        messageBox.textContent = `Você usou uma Habilidade Especial e causou ${playerDamage} de dano!`;
+        // Inimigo ataca após um breve atraso
+        setTimeout(() => {
+            if (enemyHealth > 0) {
+                // O inimigo causa o mesmo dano que o jogador
+                playerHealth -= playerDamage;
+                if (playerHealth < 0) playerHealth = 0;
+                updateHealthBars();
+
+                messageBox.textContent += ` O inimigo usou "Explosão de Energia" e causou ${playerDamage} de dano em você!`;
+                checkGameOver();
+            } else {
+                messageBox.textContent = `Você derrotou o inimigo com "Explosão de Energia"!`;
+                disableButtons();
+            }
+        }, 1000);
 
         specialCooldown = true;
         specialBtn.disabled = true;
@@ -64,18 +85,20 @@ function specialAbility() {
             specialCooldown = false;
             specialBtn.disabled = false;
             specialBtn.textContent = "Habilidade Especial";
-        }, 5000);  // Cooldown de 5 segundos
+        }, 10000);  // Cooldown de 10 segundos
     }
 }
 
 function playerDefend() {
     if (playerHealth > 0 && enemyHealth > 0) {
-        const reducedDamage = Math.floor(Math.random() * 10);
+        const reducedDamage = Math.floor(Math.random() * 10) + 5;
+
+        // Dano reduzido aplicado ao jogador
         playerHealth -= reducedDamage;
         if (playerHealth < 0) playerHealth = 0;
         updateHealthBars();
 
-        messageBox.textContent = `Você se defendeu e recebeu apenas ${reducedDamage} de dano.`;
+        messageBox.textContent = `Você usou "Defesa Aumentada" e recebeu apenas ${reducedDamage} de dano.`;
 
         checkGameOver();
     }
